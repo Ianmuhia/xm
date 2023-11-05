@@ -1,15 +1,15 @@
 [database]
-server = "192.168.0.103"
+server = "sampleport"
 port = 5432
 database = "xm"
-user = "clj"
-password = "clj"
+user = "user"
+password = "password"
 automigrate = false
 timeout = 10
 log = false
 
 [server.grpc]
-address = "192.168.0.103"
+address = "sampleport"
 port = "8091"
 timeout = 10
 prod = false

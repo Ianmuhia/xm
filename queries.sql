@@ -1,7 +1,7 @@
 -- Insert a new company into the company table
 -- name: CreateCompany :one 
 INSERT INTO company (name, description, employees, registered, type)
-VALUES ($1, $2, $3, $4, $5) RETURNING *;
+VALUES ($1, $2, $3, $4, $5) RETURNING name, description, employees, registered, type , id;
 
 
 -- Update an existing company's information

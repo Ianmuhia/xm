@@ -14,7 +14,7 @@ import (
 
 const createCompany = `-- name: CreateCompany :one
 INSERT INTO company (name, description, employees, registered, type)
-VALUES ($1, $2, $3, $4, $5) RETURNING id, name, description, employees, registered, type
+VALUES ($1, $2, $3, $4, $5) RETURNING name, description, employees, registered, type , id
 `
 
 type CreateCompanyParams struct {
@@ -25,8 +25,17 @@ type CreateCompanyParams struct {
 	Type        CompanyType
 }
 
+type CreateCompanyRow struct {
+	Name        string
+	Description pgtype.Text
+	Employees   int32
+	Registered  bool
+	Type        CompanyType
+	ID          uuid.UUID
+}
+
 // Insert a new company into the company table
-func (q *Queries) CreateCompany(ctx context.Context, arg CreateCompanyParams) (Company, error) {
+func (q *Queries) CreateCompany(ctx context.Context, arg CreateCompanyParams) (CreateCompanyRow, error) {
 	row := q.db.QueryRow(ctx, createCompany,
 		arg.Name,
 		arg.Description,
@@ -34,14 +43,14 @@ func (q *Queries) CreateCompany(ctx context.Context, arg CreateCompanyParams) (C
 		arg.Registered,
 		arg.Type,
 	)
-	var i Company
+	var i CreateCompanyRow
 	err := row.Scan(
-		&i.ID,
 		&i.Name,
 		&i.Description,
 		&i.Employees,
 		&i.Registered,
 		&i.Type,
+		&i.ID,
 	)
 	return i, err
 }

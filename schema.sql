@@ -9,7 +9,7 @@ CREATE TYPE company_type AS ENUM (
 );
 
 CREATE TABLE company (
-    id UUID PRIMARY KEY DEFAULT (uuid_generate_v4()),
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(15) NOT NULL UNIQUE,
     description VARCHAR(3000),
     employees INT NOT NULL,
