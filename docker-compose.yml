@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgresql
+    container_name: xmdb
+    restart: always
+    networks:
+      clj:
+        aliases:
+          - database
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+  
+volumes:
+  dbdata:
+  cache:
+    driver: local
+
+networks:
+  clj:

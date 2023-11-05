@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/field_mask.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "/pkg";
+
+service CompanyService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Patch(PatchRequest) returns (PatchResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+  rpc GetOne(GetOneRequest) returns (GetOneResponse);
+  rpc GetAll(google.protobuf.Empty) returns (GetOneResponse);
+  rpc Register(CreateUserRequest) returns (CreateUserResponse);
+  rpc Login(LoginRequest) returns (CreateUserResponse);
+}
+
+message CreateUserRequest { string name = 1; }
+
+message ListCompanies { repeated Company Company = 1; }
+
+message LoginRequest { string name = 1; }
+
+message CreateUserResponse {
+  string access_token = 1;
+  string refresh_token = 3;
+}
+
+message CreateRequest { Company Company = 1; }
+
+message CreateResponse { Company Company = 1; }
+
+message PatchRequest {
+  Company Company = 2;
+}
+
+message PatchResponse { Company Company = 1; }
+
+message DeleteRequest { string id = 1; }
+
+message DeleteResponse { bool success = 1; }
+
+message GetOneRequest { string id = 1; }
+
+message GetOneResponse { Company Company = 1; }
+
+enum CompanyType {
+  CORPORATION = 0;
+  NON_PROFIT = 1;
+  COOPERATIVE = 2;
+  SOLE_PROPRIETORSHIP = 3;
+}
+
+message Company {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 employees = 4;
+  bool registered = 5;
+  CompanyType type = 6;
+}

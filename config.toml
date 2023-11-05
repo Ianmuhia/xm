@@ -1,0 +1,19 @@
+[database]
+server = "192.168.0.103"
+port = 5432
+database = "xm"
+user = "clj"
+password = "clj"
+automigrate = false
+timeout = 10
+log = false
+
+[server.grpc]
+address = "192.168.0.103"
+port = "8091"
+timeout = 10
+prod = false
+
+[secrets]
+ttl = 20
+jwt = "samplejwtkey"
